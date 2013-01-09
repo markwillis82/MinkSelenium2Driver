@@ -315,9 +315,28 @@ class Selenium2Driver implements DriverInterface
      * Switches to specific browser window.
      *
      * @param string $name window name (null for switching back to main window)
+     * @param string $title window title
      */
-    public function switchToWindow($name = null)
+    public function switchToWindow($name = null, $title = null)
     {
+        if($title != null) {
+            $currentWindow = $this->wdSession->window_handle();
+            $handles = $this->wdSession->window_handles();
+            if(is_array($handles)) {
+                foreach($handles as $window) {
+                    if($window != $currentWindow) {
+                        // we are a popup so check title
+                        $this->wdSession->focusWindow($window);
+                        $pageTitle = $this->wdSession->title();
+                        if($pageTitle == $title) {
+                            return;
+                        }
+                    }
+                }
+                $this->wdSession->focusWindow($currentWindow); // revert to default
+            }
+            return;
+        }
         $this->wdSession->focusWindow($name ? $name : '');
     }
 
