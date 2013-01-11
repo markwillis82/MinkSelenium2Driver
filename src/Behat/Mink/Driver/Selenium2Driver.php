@@ -328,7 +328,7 @@ class Selenium2Driver implements DriverInterface
                         // we are a popup so check title
                         $this->wdSession->focusWindow($window);
                         $pageTitle = $this->wdSession->title();
-                        if($pageTitle == $title) {
+                        if(strtolower($pageTitle) == strtolower($title)) {
                             return;
                         }
                     }
