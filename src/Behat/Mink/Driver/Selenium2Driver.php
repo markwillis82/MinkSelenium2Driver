@@ -47,7 +47,7 @@ class Selenium2Driver implements DriverInterface
      * The WebDriverSession instance
      * @var WebDriverSession
      */
-    private $wdSession;
+    public $wdSession;
 
     /**
      * Instantiates the driver.
