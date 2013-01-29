@@ -762,7 +762,12 @@ JS;
     {
 //        $this->wdSession->element('xpath', $xpath)->value(array('value'=>str_split($path)));
           $uploader = $this->wdSession->element('xpath', $xpath);
-          $uploader->sendKeys(array($path));    }
+          try {
+            $uploader->sendKeys(array($path));
+          } catch(Excepion $e){
+              $uploader->value(array('value'=>str_split($path)));
+          }
+    }
 
     /**
      * Checks whether element visible located by it's XPath query.
